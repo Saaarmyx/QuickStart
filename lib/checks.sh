@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ============================================================
-#  InicioRapido · lib/checks.sh
+#  QuickStart · lib/checks.sh
 # ============================================================
 #  Comprobaciones del sistema: distribución, arquitectura,
 #  privilegios, red y disponibilidad de herramientas.

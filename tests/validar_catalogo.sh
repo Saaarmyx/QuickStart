@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ============================================================
-#  InicioRapido · tests/validar_catalogo.sh
+#  QuickStart · tests/validar_catalogo.sh
 # ============================================================
 #  Comprueba la integridad del catálogo sin instalar nada.
 #

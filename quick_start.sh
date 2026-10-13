@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # ============================================================
-#  InicioRapido
+#  QuickStart
 #  Instalador interactivo de aplicaciones para Ubuntu
 # ============================================================
 #  Uso:
-#    ./inicio_rapido.sh                 menú interactivo
-#    ./inicio_rapido.sh --perfil devops perfil predefinido
-#    ./inicio_rapido.sh --instalar node,rust,python
-#    ./inicio_rapido.sh --ayuda
+#    ./quick_start.sh                 menú interactivo
+#    ./quick_start.sh --perfil devops perfil predefinido
+#    ./quick_start.sh --instalar node,rust,python
+#    ./quick_start.sh --ayuda
 #
 #  Licencia: MIT. Ver LICENSE.
 # ============================================================
@@ -51,10 +51,10 @@ OMITIDOS=()
 
 mostrar_ayuda() {
     cat <<EOF
-InicioRapido $VERSION · instalador de aplicaciones para Ubuntu
+QuickStart $VERSION · instalador de aplicaciones para Ubuntu
 
 USO
-  ./inicio_rapido.sh [opciones]
+  ./quick_start.sh [opciones]
 
 OPCIONES
   --instalar LISTA      Instala los ids indicados separados por comas.
@@ -81,9 +81,9 @@ DESINSTALACIÓN
   antiguas no se tocan: usa 'sudo apt purge' si las necesitas quitar.
 
 EJEMPLOS
-  ./inicio_rapido.sh
-  ./inicio_rapido.sh --perfil data --si
-  ./inicio_rapido.sh --instalar node,python,docker --simular
+  ./quick_start.sh
+  ./quick_start.sh --perfil data --si
+  ./quick_start.sh --instalar node,python,docker --simular
 EOF
 }
 
@@ -126,7 +126,7 @@ listar_perfiles() {
     done <<<"$(profiles_lines)"
 
     echo
-    ui_detail "Uso: ./inicio_rapido.sh --perfil <nombre>"
+    ui_detail "Uso: ./quick_start.sh --perfil <nombre>"
     echo
 }
 
@@ -308,7 +308,7 @@ menu_principal() {
     while true; do
         clear 2>/dev/null || true
 
-        ui_banner "InicioRapido · instalador de aplicaciones" "$VERSION"
+        ui_banner "QuickStart · instalador de aplicaciones" "$VERSION"
         ui_detail "Sistema: ${UBUNTU_PRETTY_NAME:-desconocido} · $HOST_ARCH"
         echo
 
@@ -745,7 +745,7 @@ analizar_argumentos() {
                 ;;
             *)
                 ui_error "Opción desconocida: $1"
-                ui_detail "Ejecuta ./inicio_rapido.sh --ayuda"
+                ui_detail "Ejecuta ./quick_start.sh --ayuda"
                 exit 1
                 ;;
         esac
@@ -794,7 +794,7 @@ principal() {
         return 0
     fi
 
-    ui_banner "InicioRapido" "$VERSION"
+    ui_banner "QuickStart" "$VERSION"
 
     ui_step "Comprobaciones del sistema"
 

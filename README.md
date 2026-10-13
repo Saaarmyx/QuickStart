@@ -1,4 +1,4 @@
-# InicioRapido
+# QuickStart
 
 > Instalador interactivo de aplicaciones para Ubuntu. Elige lo que quieres de un menú y déjalo instalado.
 
@@ -27,13 +27,13 @@ Nace de tres scripts que viene usando el autor para preparar máquinas nuevas: i
 
 ## Requisitos
 
-| Requisito | Detalle |
-|---|---|
-| Sistema | Ubuntu 24.04 LTS o 26.04 LTS. En otras distribuciones se avisa y se detiene. |
+| Requisito    | Detalle                                                                                                |
+| ------------ | ------------------------------------------------------------------------------------------------------ |
+| Sistema      | Ubuntu 24.04 LTS o 26.04 LTS. En otras distribuciones se avisa y se detiene.                           |
 | Arquitectura | `amd64` completa. En `arm64` funciona, pero se omiten los `.deb` que no existen para esa arquitectura. |
-| Privilegios | Tu usuario normal con `sudo`. **No** ejecutes el script como root. |
-| Red | Necesaria para descargar índices e instaladores. |
-| Dependencias | Solo `bash`, `dpkg` y `sudo`. El propio script instala `curl` y `wget` si faltan. |
+| Privilegios  | Tu usuario normal con `sudo`. **No** ejecutes el script como root.                                     |
+| Red          | Necesaria para descargar índices e instaladores.                                                       |
+| Dependencias | Solo `bash`, `dpkg` y `sudo`. El propio script instala `curl` y `wget` si faltan.                      |
 
 Probado en Ubuntu 24.04 LTS y 26.04 LTS (alias `resolute`).
 
@@ -42,10 +42,10 @@ Probado en Ubuntu 24.04 LTS y 26.04 LTS (alias `resolute`).
 ## Instalación
 
 ```bash
-git clone https://github.com/Saaarmyx/InicioRapido.git
-cd InicioRapido
-chmod +x inicio_rapido.sh
-./inicio_rapido.sh
+git clone https://github.com/Saaarmyx/QuickStart.git
+cd QuickStart
+chmod +x quick_start.sh
+./quick_start.sh
 ```
 
 No hay nada que compilar ni dependencias que instalar: es bash puro.
@@ -57,12 +57,12 @@ No hay nada que compilar ni dependencias que instalar: es bash puro.
 Ejecuta el script sin argumentos y entra al menú:
 
 ```bash
-./inicio_rapido.sh
+./quick_start.sh
 ```
 
 ```
 ============================================================
-  InicioRapido · instalador de aplicaciones
+  QuickStart · instalador de aplicaciones
 ============================================================
 
    1) Navegadores              (1)
@@ -112,25 +112,25 @@ La selección **se acumula** entre categorías. Al terminar ves el resumen compl
 
 ## Categorías
 
-| # | Categoría | Contenido |
-|---|---|---|
-| 1 | Navegadores | Zen, Firefox, Chrome, Brave |
-| 2 | Lenguajes y runtimes | Python, Pyenv, uv, Jupyter, Node + NVM, Bun, Deno, Rust, Go, Java, PHP, Ruby, .NET, Elixir, R |
-| 3 | Editores e IDEs | VS Code, VS Codium, Zed, Sublime Text, JetBrains Toolbox, Android Studio, Neovim, Vim, Emacs |
-| 4 | Contenedores y DevOps | Git, Docker, Podman, kubectl, Helm, Minikube, Ansible, Terraform, GitHub CLI, Postman, Insomnia, DBeaver, LazyGit, GitHub Desktop |
-| 5 | Bases de datos | Clientes de PostgreSQL, MySQL, Redis y SQLite |
-| 6 | Social y comunicación | Discord, Telegram, Signal, Slack, Element, WhatsApp, Zoom, Teams |
-| 7 | Productividad | LibreOffice, Obsidian, Joplin, Bitwarden, KeePassXC, Synaptic, ajustes de GNOME, fuentes, Timeshift |
-| 8 | Multimedia y diseño | Spotify, VLC, Celluloid, FFmpeg, Audacity, OBS, Kdenlive, HandBrake, GIMP, Inkscape, Krita, Blender, yt-dlp |
-| 9 | Gaming | Steam, Lutris, Heroic, Gamescope, ProtonUp-Qt, MangoHud |
-| 10 | Terminal y utilidades | btop, htop, fastfetch, bat, eza, ripgrep, fd, fzf, tldr, jq, yq, ShellCheck, Starship, Zsh, Fish, terminales, tmux, archivadores, ImageMagick, Pandoc |
-| 11 | Red y seguridad | OpenSSH, UFW, Fail2ban, Wireshark, Nmap, herramientas de red, medidores de velocidad |
-| 12 | IA y asistentes | OpenCode, Claude Code, Ollama, ChatGPT |
+| #   | Categoría             | Contenido                                                                                                                                             |
+| --- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Navegadores           | Zen, Firefox, Chrome, Brave                                                                                                                           |
+| 2   | Lenguajes y runtimes  | Python, Pyenv, uv, Jupyter, Node + NVM, Bun, Deno, Rust, Go, Java, PHP, Ruby, .NET, Elixir, R                                                         |
+| 3   | Editores e IDEs       | VS Code, VS Codium, Zed, Sublime Text, JetBrains Toolbox, Android Studio, Neovim, Vim, Emacs                                                          |
+| 4   | Contenedores y DevOps | Git, Docker, Podman, kubectl, Helm, Minikube, Ansible, Terraform, GitHub CLI, Postman, Insomnia, DBeaver, LazyGit, GitHub Desktop                     |
+| 5   | Bases de datos        | Clientes de PostgreSQL, MySQL, Redis y SQLite                                                                                                         |
+| 6   | Social y comunicación | Discord, Telegram, Signal, Slack, Element, WhatsApp, Zoom, Teams                                                                                      |
+| 7   | Productividad         | LibreOffice, Obsidian, Joplin, Bitwarden, KeePassXC, Synaptic, ajustes de GNOME, fuentes, Timeshift                                                   |
+| 8   | Multimedia y diseño   | Spotify, VLC, Celluloid, FFmpeg, Audacity, OBS, Kdenlive, HandBrake, GIMP, Inkscape, Krita, Blender, yt-dlp                                           |
+| 9   | Gaming                | Steam, Lutris, Heroic, Gamescope, ProtonUp-Qt, MangoHud                                                                                               |
+| 10  | Terminal y utilidades | btop, htop, fastfetch, bat, eza, ripgrep, fd, fzf, tldr, jq, yq, ShellCheck, Starship, Zsh, Fish, terminales, tmux, archivadores, ImageMagick, Pandoc |
+| 11  | Red y seguridad       | OpenSSH, UFW, Fail2ban, Wireshark, Nmap, herramientas de red, medidores de velocidad                                                                  |
+| 12  | IA y asistentes       | OpenCode, Claude Code, Ollama, ChatGPT                                                                                                                |
 
 Lista completa con los identificadores de cada entrada:
 
 ```bash
-./inicio_rapido.sh --listar
+./quick_start.sh --listar
 ```
 
 ---
@@ -140,24 +140,24 @@ Lista completa con los identificadores de cada entrada:
 Atajos a grupos de apps que suelen ir juntas.
 
 ```bash
-./inicio_rapido.sh --perfil devops
+./quick_start.sh --perfil devops
 ```
 
-| Perfil | Qué instala |
-|---|---|
-| `minimal` | Lo esencial del día a día |
-| `frontend` | Node, Bun, Python, editores, navegadores, Postman |
-| `backend` | Node, Python, Docker, clientes de PostgreSQL y MySQL |
-| `data` | Python, uv, Jupyter, R, DBeaver |
-| `devops` | Docker, Podman, Kubernetes, Ansible, Terraform, `gh` |
-| `mobile` | Android Studio, Node, Python, Insomnia |
-| `multimedia` | FFmpeg, editores de vídeo y audio, GIMP, Inkscape |
-| `gamedev` | Steam, Lutris, Heroic, Gamescope, MangoHud |
-| `social` | Discord, Telegram, Signal, Slack, Element, WhatsApp, Spotify |
-| `privacidad` | Zen, Signal, gestores de contraseñas, UFW |
+| Perfil       | Qué instala                                                  |
+| ------------ | ------------------------------------------------------------ |
+| `minimal`    | Lo esencial del día a día                                    |
+| `frontend`   | Node, Bun, Python, editores, navegadores, Postman            |
+| `backend`    | Node, Python, Docker, clientes de PostgreSQL y MySQL         |
+| `data`       | Python, uv, Jupyter, R, DBeaver                              |
+| `devops`     | Docker, Podman, Kubernetes, Ansible, Terraform, `gh`         |
+| `mobile`     | Android Studio, Node, Python, Insomnia                       |
+| `multimedia` | FFmpeg, editores de vídeo y audio, GIMP, Inkscape            |
+| `gamedev`    | Steam, Lutris, Heroic, Gamescope, MangoHud                   |
+| `social`     | Discord, Telegram, Signal, Slack, Element, WhatsApp, Spotify |
+| `privacidad` | Zen, Signal, gestores de contraseñas, UFW                    |
 
 ```bash
-./inicio_rapido.sh --listar-perfiles
+./quick_start.sh --listar-perfiles
 ```
 
 ---
@@ -166,21 +166,21 @@ Atajos a grupos de apps que suelen ir juntas.
 
 Todo se puede automatizar, sin menús.
 
-| Opción | Qué hace |
-|---|---|
-| `--instalar LISTA` | Instala los ids indicados, separados por comas. |
-| `--perfil NOMBRE` | Aplica un perfil. |
-| `--categoria NOMBRE` | Selecciona una categoría completa. Admite comas. |
-| `--todos` | Selecciona el catálogo entero. |
-| `--sin-menu` | Instala directamente lo indicado. |
-| `--si`, `--yes`, `-y` | No pide confirmación final. |
-| `--simular`, `--dry-run` | Muestra qué haría sin tocar nada. |
-| `--forzar` | Reinstala aunque la app ya esté presente. |
-| `--listar` | Lista el catálogo y termina. |
-| `--listar-perfiles` | Lista los perfiles y termina. |
-| `--log RUTA` | Guarda el registro en la ruta indicada. |
-| `--no-color` | Desactiva los colores. |
-| `--ayuda`, `-h` | Ayuda. |
+| Opción                   | Qué hace                                         |
+| ------------------------ | ------------------------------------------------ |
+| `--instalar LISTA`       | Instala los ids indicados, separados por comas.  |
+| `--perfil NOMBRE`        | Aplica un perfil.                                |
+| `--categoria NOMBRE`     | Selecciona una categoría completa. Admite comas. |
+| `--todos`                | Selecciona el catálogo entero.                   |
+| `--sin-menu`             | Instala directamente lo indicado.                |
+| `--si`, `--yes`, `-y`    | No pide confirmación final.                      |
+| `--simular`, `--dry-run` | Muestra qué haría sin tocar nada.                |
+| `--forzar`               | Reinstala aunque la app ya esté presente.        |
+| `--listar`               | Lista el catálogo y termina.                     |
+| `--listar-perfiles`      | Lista los perfiles y termina.                    |
+| `--log RUTA`             | Guarda el registro en la ruta indicada.          |
+| `--no-color`             | Desactiva los colores.                           |
+| `--ayuda`, `-h`          | Ayuda.                                           |
 
 Variables de entorno: `ASSUME_YES=1`, `NO_COLOR=1`, `LOG_FILE`.
 
@@ -188,22 +188,22 @@ Variables de entorno: `ASSUME_YES=1`, `NO_COLOR=1`, `LOG_FILE`.
 
 ```bash
 # Ver qué haría un perfil, sin instalar nada
-./inicio_rapido.sh --perfil devops --simular
+./quick_start.sh --perfil devops --simular
 
 # Dejar un equipo de backend listo, sin preguntas
-./inicio_rapido.sh --perfil backend --si
+./quick_start.sh --perfil backend --si
 
 # Sólo unas pocas herramientas
-./inicio_rapido.sh --instalar node,rust,python,vscode
+./quick_start.sh --instalar node,rust,python,vscode
 
 # Una categoría entera, más el perfil de gaming
-./inicio_rapido.sh --categoria "Terminal y utilidades" --perfil gamedev --si
+./quick_start.sh --categoria "Terminal y utilidades" --perfil gamedev --si
 ```
 
 Integración en una máquina de producción o en un script de provisioning:
 
 ```bash
-ASSUME_YES=1 ./inicio_rapido.sh --perfil devops --log /var/log/inicio-rapido.log
+ASSUME_YES=1 ./quick_start.sh --perfil devops --log /var/log/inicio-rapido.log
 ```
 
 ---
@@ -212,14 +212,14 @@ ASSUME_YES=1 ./inicio_rapido.sh --perfil devops --log /var/log/inicio-rapido.log
 
 Cada aplicación del catálogo declara **cómo** instalarse:
 
-| Tipo | Qué hace |
-|---|---|
-| `apt` | `sudo apt install -y` con los paquetes indicados. |
-| `snap` | Instala `snapd` si falta y luego `sudo snap install`. |
-| `flatpak` | Añade Flathub si falta y luego `sudo flatpak install`. |
-| `deb` | Descarga el `.deb` a un temporal y lo instala con `apt`. |
-| `ppa` | Añade el PPA con `add-apt-repository` y instala el paquete. |
-| `custom` | Manejador propio en `lib/installers.sh` para lo que `apt` no resuelve. |
+| Tipo      | Qué hace                                                               |
+| --------- | ---------------------------------------------------------------------- |
+| `apt`     | `sudo apt install -y` con los paquetes indicados.                      |
+| `snap`    | Instala `snapd` si falta y luego `sudo snap install`.                  |
+| `flatpak` | Añade Flathub si falta y luego `sudo flatpak install`.                 |
+| `deb`     | Descarga el `.deb` a un temporal y lo instala con `apt`.               |
+| `ppa`     | Añade el PPA con `add-apt-repository` y instala el paquete.            |
+| `custom`  | Manejador propio en `lib/installers.sh` para lo que `apt` no resuelve. |
 
 Los manejadores `custom` cubren lo que necesita pasos propios: `rustup`, `nvm`, `go.dev`, `uv`, `bun`, `deno`, `dotnet-install.sh`, el instalador de OpenCode, el de Ollama, los repositorios oficiales de Firefox, Brave y GitHub CLI, los tarballs de Neovim y Go, las herramientas de línea de comandos de Android, y los paquetes que piden confirmación (Docker, Wireshark, FFmpeg con códecs).
 
@@ -238,8 +238,8 @@ Antes de instalar, el script comprueba si la aplicación ya está presente y la 
 ## Estructura del proyecto
 
 ```
-InicioRapido/
-├── inicio_rapido.sh              Punto de entrada: menú, CLI y orquestación
+QuickStart/
+├── quick_start.sh              Punto de entrada: menú, CLI y orquestación
 ├── lib/
 │   ├── ui.sh                     Colores, banners, mensajes y preguntas
 │   ├── checks.sh                 Comprobaciones del sistema
@@ -304,7 +304,7 @@ Toda la instalación se guarda en un archivo. Por defecto:
 Puedes fijar la ruta:
 
 ```bash
-./inicio_rapido.sh --perfil backend --log ~/inicio-rapido.log
+./quick_start.sh --perfil backend --log ~/inicio-rapido.log
 ```
 
 Si algo falla, el informe final separa lo instalado, lo omitido y lo fallido, y el registro tiene el detalle completo de cada orden.
@@ -312,7 +312,7 @@ Si algo falla, el informe final separa lo instalado, lo omitido y lo fallido, y 
 ### Antes de reportar un problema
 
 ```bash
-./inicio_rapido.sh --perfil TU_PERFIL --simular
+./quick_start.sh --perfil TU_PERFIL --simular
 ```
 
 Si en simulación todo es correcto, el problema suele estar en la red o en los permisos de `sudo`.
@@ -327,13 +327,13 @@ Antes de enviar cambios:
 
 ```bash
 ./tests/validar_catalogo.sh
-bash -n inicio_rapido.sh
+bash -n quick_start.sh
 ```
 
 Si tienes `shellcheck` instalado:
 
 ```bash
-shellcheck inicio_rapido.sh lib/*.sh tests/*.sh
+shellcheck quick_start.sh lib/*.sh tests/*.sh
 ```
 
 ---

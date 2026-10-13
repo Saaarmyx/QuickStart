@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ============================================================
-#  InicioRapido · lib/ui.sh
+#  QuickStart · lib/ui.sh
 # ============================================================
 #  Interfaz de usuario: colores, banners, mensajes, preguntas
 #  y utilidades de entrada por teclado.

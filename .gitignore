@@ -3,7 +3,7 @@
 inicio-rapido-*.log
 
 # Temporales generados por el propio script
-/inicio_rapido.deb
+/quick_start.deb
 *.AppImage
 
 # Copias de seguridad de editores

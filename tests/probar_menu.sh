@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ============================================================
-#  InicioRapido · tests/probar_menu.sh
+#  QuickStart · tests/probar_menu.sh
 # ============================================================
 #  Prueba la lógica de los menús y de la selección sin instalar
 #  nada y sin tocar el sistema.
@@ -18,7 +18,7 @@ RAIZ="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 # Carga el programa principal sin ejecutarlo.
 export INICIO_RAPIDO_NO_EJECUTAR=1
 # shellcheck source=/dev/null
-. "$RAIZ/inicio_rapido.sh"
+. "$RAIZ/quick_start.sh"
 
 HOST_ARCH="amd64"
 VERSION="test"

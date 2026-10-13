@@ -1,4 +1,4 @@
-# Cómo contribuir en InicioRapido
+# Cómo contribuir en QuickStart
 
 Gracias por querer participar. El proyecto es a propósito sencillo: bash, sin
 dependencias ni compilación. Cualquiera puede añadir una aplicación sin tocar
@@ -7,8 +7,8 @@ la lógica del programa.
 ## Antes de empezar
 
 ```bash
-git clone https://github.com/Saaarmyx/InicioRapido.git
-cd InicioRapido
+git clone https://github.com/Saaarmyx/QuickStart.git
+cd QuickStart
 ```
 
 No hay nada que compilar ni dependencias que instalar.
@@ -17,13 +17,13 @@ No hay nada que compilar ni dependencias que instalar.
 
 ```bash
 ./tests/validar_catalogo.sh
-bash -n inicio_rapido.sh
+bash -n quick_start.sh
 ```
 
 Si tienes `shellcheck`:
 
 ```bash
-shellcheck inicio_rapido.sh lib/*.sh tests/*.sh
+shellcheck quick_start.sh lib/*.sh tests/*.sh
 ```
 
 `validar_catalogo.sh` debe salir con código 0.
@@ -41,15 +41,15 @@ corresponda.
 id|categoría|tipo|argumento|nombre|descripción|comprobación
 ```
 
-| Campo | Reglas |
-|---|---|
-| `id` | Minúsculas, números y guiones. Empieza por letra o número. Es el nombre que se usa en `--instalar`, así que debe ser corto y predecible. |
-| `categoría` | Debe coincidir **exactamente** con una categoría ya existente, o se creará un grupo nuevo en el menú. |
-| `tipo` | `apt`, `snap`, `flatpak`, `deb`, `ppa` o `custom`. |
-| `argumento` | Paquetes separados por espacio, nombre de snap, id de Flatpak, URL del `.deb` o nombre del manejador `custom`. |
-| `nombre` | Lo que ve el usuario en el menú. |
-| `descripción` | Una línea corta que explique para qué sirve. |
-| `comprobación` | Opcional. Si la dejas vacía se deduce del tipo. |
+| Campo          | Reglas                                                                                                                                   |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | Minúsculas, números y guiones. Empieza por letra o número. Es el nombre que se usa en `--instalar`, así que debe ser corto y predecible. |
+| `categoría`    | Debe coincidir **exactamente** con una categoría ya existente, o se creará un grupo nuevo en el menú.                                    |
+| `tipo`         | `apt`, `snap`, `flatpak`, `deb`, `ppa` o `custom`.                                                                                       |
+| `argumento`    | Paquetes separados por espacio, nombre de snap, id de Flatpak, URL del `.deb` o nombre del manejador `custom`.                           |
+| `nombre`       | Lo que ve el usuario en el menú.                                                                                                         |
+| `descripción`  | Una línea corta que explique para qué sirve.                                                                                             |
+| `comprobación` | Opcional. Si la dejas vacía se deduce del tipo.                                                                                          |
 
 No uses el carácter `|` dentro de un campo: es el separador.
 
@@ -96,13 +96,13 @@ terraform|Contenedores y DevOps|ppa|ppa:hashicorp/terraform|Terraform|Infrastruc
 Si la detección automática no sirve para tu aplicación, declara la
 comprobación en el último campo:
 
-| Formato | Qué hace |
-|---|---|
-| `apt:pkg1,pkg2` | Todos los paquetes deben estar instalados. |
-| `snap:nombre` | `snap list nombre` |
-| `flatpak:id` | `flatpak info id` |
-| `bin:comando1,comando2` | Basta con que exista uno de los comandos. |
-| `path:/ruta` | La ruta debe existir. |
+| Formato                 | Qué hace                                   |
+| ----------------------- | ------------------------------------------ |
+| `apt:pkg1,pkg2`         | Todos los paquetes deben estar instalados. |
+| `snap:nombre`           | `snap list nombre`                         |
+| `flatpak:id`            | `flatpak info id`                          |
+| `bin:comando1,comando2` | Basta con que exista uno de los comandos.  |
+| `path:/ruta`            | La ruta debe existir.                      |
 
 ```
 claude|IA y asistentes|deb|https://...|Claude Code|Asistente de Anthropic|bin:claude
@@ -213,9 +213,9 @@ Un commit hace una cosa. Si mezclas catálogo y documentación, sepáralos.
 ## Pull requests
 
 1. Ejecuta `./tests/validar_catalogo.sh` y asegúrate de que sale con 0.
-2. Ejecuta `bash -n inicio_rapido.sh`.
+2. Ejecuta `bash -n quick_start.sh`.
 3. Prueba en simulación lo que hayas cambiado:
-   `./inicio_rapido.sh --instalar TU_ID --simular`
+   `./quick_start.sh --instalar TU_ID --simular`
 4. Añade la entrada a la sección **No publicado** de `CHANGELOG.md`.
 5. Explica en la descripción qué añade y cómo lo has probado.
 
@@ -231,7 +231,7 @@ Incluye:
 - Versión de Ubuntu (`lsb_release -ds`).
 - Arquitectura (`dpkg --print-architecture`).
 - El comando que ejecutaste.
-- La salida de `./inicio_rapido.sh --instalar TU_ID --simular`.
+- La salida de `./quick_start.sh --instalar TU_ID --simular`.
 - El fragmento relevante del registro.
 
 ---

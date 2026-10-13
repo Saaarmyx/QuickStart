@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ============================================================
-#  InicioRapido · lib/catalog.sh
+#  QuickStart · lib/catalog.sh
 # ============================================================
 #  Catálogo maestro de aplicaciones y perfiles.
 #

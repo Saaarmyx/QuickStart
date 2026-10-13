@@ -1,6 +1,6 @@
 # Changelog
 
-Todas las novedades relevantes de InicioRapido se anotan aquí.
+Todas las novedades relevantes de QuickStart se anotan aquí.
 
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y
 el proyecto usa [versionado semántico](https://semver.org/lang/es/).
@@ -60,5 +60,5 @@ previos del autor: instalación limpia, driver Wi-Fi y utilidades.
 - Los `.deb` exclusivos de `amd64` se omiten con aviso en `arm64` en lugar de
   fallar.
 
-[No publicado]: https://github.com/Saaarmyx/InicioRapido/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/Saaarmyx/InicioRapido/releases/tag/v1.0.0
+[No publicado]: https://github.com/Saaarmyx/QuickStart/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Saaarmyx/QuickStart/releases/tag/v1.0.0

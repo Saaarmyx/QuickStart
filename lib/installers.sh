@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ============================================================
-#  InicioRapido · lib/installers.sh
+#  QuickStart · lib/installers.sh
 # ============================================================
 #  Motores de instalación. Cada tipo del catálogo tiene su
 #  función correspondente, además de los manejadores
