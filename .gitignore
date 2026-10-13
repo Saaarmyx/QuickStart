@@ -1,0 +1,19 @@
+# Registros de instalación
+*.log
+inicio-rapido-*.log
+
+# Temporales generados por el propio script
+/inicio_rapido.deb
+*.AppImage
+
+# Copias de seguridad de editores
+*~
+*.swp
+*.swo
+.*.sw?
+*.bak
+*.orig
+
+# Sistema
+.DS_Store
+Thumbs.db
