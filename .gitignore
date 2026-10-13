@@ -1,0 +1,32 @@
+# QuickStart — .gitignore
+# Logs generados
+logs/
+*.log
+/tmp/quickstart-*.log
+
+# Paquetes descargados/instalados
+*.deb
+*.rpm
+*.apk
+
+# Config local (overrides)
+config/*.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+.idea/
+
+# Temporales
+*.tmp
+*.swp
+*~
+
+# Backup de scripts
+*.bak
+*.orig
