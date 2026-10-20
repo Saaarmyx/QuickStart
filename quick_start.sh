@@ -20,7 +20,7 @@ VERSION="1.0.0"
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 LIB_DIR="$SCRIPT_DIR/lib"
 
-for libreria in ui checks catalog installers; do
+for libreria in ui checks catalog installers wifi themes removers; do
     if [ ! -f "$LIB_DIR/$libreria.sh" ]; then
         printf 'ERROR: no se encontró %s\n' "$LIB_DIR/$libreria.sh" >&2
         exit 1
@@ -39,11 +39,15 @@ SIN_MENU=0
 ASSUME_YES=0
 DRY_RUN=0
 LISTAR_SOLO=0
+MODO_DESINSTALAR=0
+MODO_TEMA=0
 LOG_FILE="${LOG_FILE:-/tmp/quickstart-$(date +%Y%m%d-%H%M%S).log}"
 
 INSTALADOS=()
 FALLIDOS=()
 OMITIDOS=()
+DESINSTALADOS=()
+DESINSTALADOS_FALLIDOS=()
 
 # ------------------------------------------------------------
 #  Uso
@@ -67,6 +71,8 @@ OPCIONES
   --simular, --dry-run  Muestra qué se haría sin instalar nada.
   --listar              Lista el catálogo completo y termina.
   --listar-perfiles     Lista los perfiles disponibles y termina.
+  --desinstalar         Entra al modo de desinstalación de apps.
+  --tema                Instala y aplica el tema incluido (GNOME).
   --log RUTA            Guarda el registro en la ruta indicada.
   --no-color            Desactiva los colores.
   --ayuda, -h           Muestra esta ayuda.
@@ -296,6 +302,126 @@ menu_categoria() {
     done
 }
 
+# Menú de desinstalación: lista lo del catálogo que está instalado.
+menu_desinstalar() {
+    local -a instaladas=()
+    local id nombre tipo
+
+    while IFS= read -r id; do
+        [ -n "$id" ] || continue
+
+        if remover_instalada "$id"; then
+            instaladas+=("$id")
+        fi
+    done <<<"$(catalog_lines | cut -d'|' -f1)"
+
+    if [ "${#instaladas[@]}" -eq 0 ]; then
+        ui_warning "No hay aplicaciones del catálogo instaladas."
+        ui_detail "No hay nada que quitar desde aquí."
+        return 0
+    fi
+
+    local entrada opcion i total="${#instaladas[@]}"
+    local -a opciones
+
+    while true; do
+        clear 2>/dev/null || true
+
+        ui_banner "Desinstalar aplicaciones" "$VERSION"
+
+        ui_info "Aplicaciones del catálogo instaladas: $total"
+        ui_detail "Introduce números para seleccionar. Comandos: v (volver)"
+        echo
+
+        for i in "${!instaladas[@]}"; do
+            id="${instaladas[$i]}"
+            nombre="$(catalog_field "$id" 5)"
+            tipo="$(catalog_type_label "$(catalog_field "$id" 3)")"
+
+            printf '  %-4s %2d) %-26s %b\n' "[ ]" "$((i + 1))" "$nombre" "${DIM}${tipo}${NC}"
+        done
+
+        echo
+        read -rp "  ${BOLD}Selección:${NC} " entrada || return 0
+
+        [ -z "$entrada" ] && continue
+
+        case "$entrada" in
+            v | V | volver)
+                return 0
+                ;;
+            *)
+                read -ra opciones <<<"${entrada//,/ }"
+                local -a elegidas=()
+
+                for opcion in "${opciones[@]}"; do
+                    if ! [[ "$opcion" =~ ^[0-9]+$ ]] ||
+                        [ "$opcion" -lt 1 ] ||
+                        [ "$opcion" -gt "$total" ]; then
+                        ui_error "Opción no válida: $opcion"
+                        continue
+                    fi
+
+                    elegidas+=("${instaladas[$((opcion - 1))]}")
+                done
+
+                [ "${#elegidas[@]}" -eq 0 ] && continue
+
+                echo
+                ui_step "Confirmación"
+                for id in "${elegidas[@]}"; do
+                    ui_detail "- $(catalog_field "$id" 5)"
+                done
+
+                if ! ui_yes_no "¿Desinstalar ${#elegidas[@]} aplicación(es)?"; then
+                    ui_skip "Desinstalación cancelada."
+                    ui_pause
+                    return 0
+                fi
+
+                exec > >(tee -a "$LOG_FILE") 2>&1
+
+                DESINSTALADOS=()
+                DESINSTALADOS_FALLIDOS=()
+
+                for id in "${elegidas[@]}"; do
+                    if remover_app "$id"; then
+                        DESINSTALADOS+=("$id")
+                    else
+                        DESINSTALADOS_FALLIDOS+=("$id")
+                    fi
+                done
+
+                ui_step "Informe de desinstalación"
+                [ "${#DESINSTALADOS[@]}" -gt 0 ] &&
+                    ui_success "Desinstaladas: ${DESINSTALADOS[*]}"
+                [ "${#DESINSTALADOS_FALLIDOS[@]}" -gt 0 ] &&
+                    ui_warning "Sin desinstalar: ${DESINSTALADOS_FALLIDOS[*]}"
+                ui_detail "Registro: $LOG_FILE"
+
+                ui_pause
+                return 0
+                ;;
+        esac
+    done
+}
+
+# Paso previo a todo: git y, si el hardware lo pide, el driver Wi-Fi.
+instalar_base() {
+    ui_step "Base del sistema"
+
+    # git es lo primero: sin él no se pueden clonar drivers ni repos.
+    if command -v git >/dev/null 2>&1; then
+        ui_success "git ya está instalado."
+    else
+        ui_info "Instalando git..."
+        irun "sudo apt install -y git"
+    fi
+
+    # El driver Wi-Fi solo aparece si el chip coincide.
+    wifi_ofrecer
+}
+
 menu_principal() {
     local categorias
     local entrada
@@ -324,6 +450,8 @@ menu_principal() {
 
         echo
         echo -e "  ${BOLD}P)  Perfiles rápidos${NC}"
+        echo -e "  ${BOLD}T)  Personalización: tema e iconos${NC}"
+        echo -e "  ${BOLD}D)  Desinstalar aplicaciones${NC}"
         echo -e "  ${BOLD}C)  Catálogo completo${NC}"
         echo -e "  ${BOLD}0)  Continuar con la instalación${NC}"
         echo
@@ -341,6 +469,13 @@ menu_principal() {
                 ;;
             p | P)
                 menu_perfiles
+                ;;
+            t | T)
+                tema_instalar
+                ui_pause
+                ;;
+            d | D)
+                menu_desinstalar
                 ;;
             c | C)
                 listar_catalogo
@@ -730,6 +865,14 @@ analizar_argumentos() {
                 LISTAR_PERFILES=1
                 shift
                 ;;
+            --desinstalar)
+                MODO_DESINSTALAR=1
+                shift
+                ;;
+            --tema)
+                MODO_TEMA=1
+                shift
+                ;;
             --log)
                 if [ -z "${2:-}" ]; then
                     ui_error "--log necesita una ruta."
@@ -815,6 +958,17 @@ principal() {
 
     checks_download_tools
 
+    if [ "$MODO_DESINSTALAR" = "1" ]; then
+        ui_step "Modo desinstalación"
+        menu_desinstalar
+        return 0
+    fi
+
+    if [ "$MODO_TEMA" = "1" ]; then
+        tema_instalar
+        return 0
+    fi
+
     ui_step "Selección de aplicaciones"
 
     if [ -n "$PERFIL_PENDIENTE" ]; then
@@ -842,13 +996,16 @@ principal() {
     ui_detail "La salida completa se guardará en $LOG_FILE"
     exec > >(tee -a "$LOG_FILE") 2>&1
 
-    if checks_network; then
-        ejecutar_instalacion "${SELECCION[@]:-}"
-        mostrar_informe
-    else
+    if ! checks_network; then
         ui_error "Instalación cancelada por falta de conexión."
         return 1
     fi
+
+    # Primero la base (git y driver Wi-Fi), después las apps.
+    instalar_base
+
+    ejecutar_instalacion "${SELECCION[@]:-}"
+    mostrar_informe
 
     return 0
 }
