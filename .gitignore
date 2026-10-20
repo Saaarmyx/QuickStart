@@ -1,6 +1,6 @@
 # Registros de instalación
 *.log
-inicio-rapido-*.log
+quickstart-*.log
 
 # Temporales generados por el propio script
 /quick_start.deb

@@ -39,7 +39,7 @@ SIN_MENU=0
 ASSUME_YES=0
 DRY_RUN=0
 LISTAR_SOLO=0
-LOG_FILE="${LOG_FILE:-/tmp/inicio-rapido-$(date +%Y%m%d-%H%M%S).log}"
+LOG_FILE="${LOG_FILE:-/tmp/quickstart-$(date +%Y%m%d-%H%M%S).log}"
 
 INSTALADOS=()
 FALLIDOS=()
@@ -855,8 +855,8 @@ principal() {
 
 trap 'echo; ui_info "Interrumpido por el usuario."; exit 130' INT
 
-# INICIO_RAPIDO_NO_EJECUTAR permite que los tests carguen este archivo
+# QUICKSTART_NO_EJECUTAR permite que los tests carguen este archivo
 # sin lanzar la instalación.
-if [ "${INICIO_RAPIDO_NO_EJECUTAR:-0}" != "1" ]; then
+if [ "${QUICKSTART_NO_EJECUTAR:-0}" != "1" ]; then
     principal "$@"
 fi

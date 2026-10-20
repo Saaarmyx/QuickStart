@@ -16,7 +16,7 @@ set -uo pipefail
 RAIZ="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # Carga el programa principal sin ejecutarlo.
-export INICIO_RAPIDO_NO_EJECUTAR=1
+export QUICKSTART_NO_EJECUTAR=1
 # shellcheck source=/dev/null
 . "$RAIZ/quick_start.sh"
 
