@@ -101,12 +101,57 @@ La selección **se acumula** entre categorías. Al terminar ves el resumen compl
 ### Flujo de una instalación
 
 1. Comprobaciones: distribución, arquitectura, `sudo`, red.
-2. Menú de selección.
-3. Resumen agrupado por categoría con confirmación.
-4. `apt update` y reparación de paquetes a medias.
-5. Preparación de `snapd` o Flathub si la selección lo necesita.
-6. Instalación app por app, saltando lo ya instalado.
-7. Reparación final e informe de qué se instaló, omitió y falló.
+2. **Base del sistema**: `git` siempre primero y, si el hardware coincide, el driver Wi-Fi.
+3. Menú de selección.
+4. Resumen agrupado por categoría con confirmación.
+5. `apt update` y reparación de paquetes a medias.
+6. Preparación de `snapd` o Flathub si la selección lo necesita.
+7. Instalación app por app, saltando lo ya instalado.
+8. Reparación final e informe de qué se instaló, omitió y falló.
+
+---
+
+## Base del sistema: git y driver Wi-Fi
+
+Antes de cualquier app se instala la base:
+
+- **`git`** se instala siempre primero, porque sin él no se pueden clonar drivers ni repositorios.
+- **Driver Wi-Fi MediaTek MT7902** solo se ofrece si el chip está realmente en la máquina. Se detecta con `lspci`, `lsusb` y `/sys`; si el equipo no lleva ese chip, la opción **no aparece ni se menciona**.
+
+El driver se clona desde su repositorio oficial y se ejecuta su instalador. Si ya está cargado el módulo, se omite.
+
+---
+
+## Personalización: tema e iconos
+
+Incluye el tema GTK **MacTahoe-Dark** en [`themes/`](themes/). Es opcional y nunca se instala solo: se pide desde el menú (`T) Personalización`) o con `--tema`.
+
+```bash
+./quick_start.sh --tema
+```
+
+Qué hace:
+
+1. Copia el tema a `~/.themes`.
+2. Si aceptas, descarga iconos y cursores **WhiteSur** a `~/.icons`.
+3. Aplica todo con `gsettings` en sesiones GNOME.
+4. Ofrece instalar `gnome-tweaks` para gestionarlo desde un panel.
+
+Para deshacerlo, la función `tema_quitar` de `lib/themes.sh` restaura el tema Yaru del sistema y borra lo instalado.
+
+---
+
+## Desinstalar aplicaciones
+
+Puedes quitar lo que el catálogo instaló, desde el menú (`D) Desinstalar`) o con:
+
+```bash
+./quick_start.sh --desinstalar
+```
+
+Lista solo las apps del catálogo que están presentes en el equipo y las quita con el gestor que corresponde: `apt purge`, `snap remove` o `flatpak uninstall`, y desinstaladores propios para las que se instalan a mano.
+
+**Protección de paquetes base**: hay apps cuyo paquete no se puede purgar sin dejar el sistema inservible (`python3`, por ejemplo, lo usan `apt` y media distro). Esas se detectan y se niegan con un aviso explicando el motivo, en lugar de romperte el equipo.
 
 ---
 
@@ -178,6 +223,8 @@ Todo se puede automatizar, sin menús.
 | `--forzar`               | Reinstala aunque la app ya esté presente.        |
 | `--listar`               | Lista el catálogo y termina.                     |
 | `--listar-perfiles`      | Lista los perfiles y termina.                    |
+| `--desinstalar`          | Entra al modo de desinstalación.                |
+| `--tema`                 | Instala y aplica el tema incluido (GNOME).       |
 | `--log RUTA`             | Guarda el registro en la ruta indicada.          |
 | `--no-color`             | Desactiva los colores.                           |
 | `--ayuda`, `-h`          | Ayuda.                                           |
@@ -203,7 +250,7 @@ Variables de entorno: `ASSUME_YES=1`, `NO_COLOR=1`, `LOG_FILE`.
 Integración en una máquina de producción o en un script de provisioning:
 
 ```bash
-ASSUME_YES=1 ./quick_start.sh --perfil devops --log /var/log/inicio-rapido.log
+ASSUME_YES=1 ./quick_start.sh --perfil devops --log /var/log/quickstart.log
 ```
 
 ---
@@ -244,9 +291,15 @@ QuickStart/
 │   ├── ui.sh                     Colores, banners, mensajes y preguntas
 │   ├── checks.sh                 Comprobaciones del sistema
 │   ├── catalog.sh                Catálogo de aplicaciones y perfiles
-│   └── installers.sh             Motores de instalación y manejadores custom
+│   ├── installers.sh             Motores de instalación y manejadores custom
+│   ├── wifi.sh                   Detección e instalación del driver Wi-Fi
+│   ├── themes.sh                 Tema e iconos (personalización)
+│   └── removers.sh               Desinstalación de lo que sabe instalar
+├── themes/
+│   └── MacTahoe-Dark/            Tema GTK incluido, listo para instalar
 ├── tests/
-│   └── validar_catalogo.sh       Comprueba la integridad del catálogo
+│   ├── validar_catalogo.sh       Comprueba la integridad del catálogo
+│   └── probar_menu.sh            Prueba la lógica de menús y selección
 ├── docs/
 │   └── CONTRIBUTING.md           Cómo añadir apps y enviar cambios
 ├── README.md
@@ -291,6 +344,8 @@ Después valida el catálogo:
 
 Los detalles completos están en [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md).
 
+Si la app tiene un desinstalador propio, añádelo en `lib/removers.sh` con el nombre `custom_miapp_desinstalar`.
+
 ---
 
 ## Registro y diagnóstico
@@ -298,13 +353,13 @@ Los detalles completos están en [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md).
 Toda la instalación se guarda en un archivo. Por defecto:
 
 ```
-/tmp/inicio-rapido-AAAAMMDD-HHMMSS.log
+/tmp/quickstart-AAAAMMDD-HHMMSS.log
 ```
 
 Puedes fijar la ruta:
 
 ```bash
-./quick_start.sh --perfil backend --log ~/inicio-rapido.log
+./quick_start.sh --perfil backend --log ~/quickstart.log
 ```
 
 Si algo falla, el informe final separa lo instalado, lo omitido y lo fallido, y el registro tiene el detalle completo de cada orden.
@@ -342,4 +397,4 @@ shellcheck quick_start.sh lib/*.sh tests/*.sh
 
 MIT. Ver [LICENSE](LICENSE).
 
-Las marcas y los nombres de los productos mentioned pertenecen a sus respectivos dueños. Este proyecto no está afiliado con Microsoft, Mozilla, Brave, JetBrains, Valve ni ninguna de las marcas que instala. Cada aplicación se descarga desde su fuente oficial en el momento de instalarse.
+Las marcas y los nombres de los productos mencionados pertenecen a sus respectivos dueños. Este proyecto no está afiliado con Microsoft, Mozilla, Brave, JetBrains, Valve ni ninguna de las marcas que instala. Cada aplicación se descarga desde su fuente oficial en el momento de instalarse.

@@ -7,7 +7,33 @@ el proyecto usa [versionado semántico](https://semver.org/lang/es/).
 
 ## [No publicado]
 
-Aún no hay cambios pendientes de publicar.
+### Añadido
+
+- Base del sistema obligatoria: `git` se instala siempre primero y, si el
+  equipo lleva el chip, se ofrece el driver Wi-Fi MediaTek MT7902.
+- Detección de compatibilidad del driver Wi-Fi con `lspci`, `lsusb` y `/sys`.
+  Si el chip no coincide, la opción no aparece ni se menciona.
+- Desinstalación de apps del catálogo desde el menú (`D`) o con
+  `--desinstalar`, usando `apt purge`, `snap remove` o `flatpak uninstall`
+  según el motor. Con desinstaladores propios para las apps montadas a mano.
+- Protección de paquetes base: no se purga nada que deje el sistema
+  inservible (`python3` y similares).
+- Personalización del escritorio: tema incluido MacTahoe-Dark instalado en
+  `~/.themes` y aplicado con `gsettings`, con iconos y cursores WhiteSur
+  opcionales. Se pide desde el menú (`T`) o con `--tema`.
+- Spotify instalado con `--classic`, sin lo cual el snap no arranca.
+
+### Corregido
+
+- Zen Browser no arrancaba en Ubuntu 24.04+ por depender de FUSE2: ahora el
+  AppImage se extrae y el lanzador apunta a `AppRun`, con icono propio.
+- Visual Studio Code pasa del `.deb` suelto al repositorio oficial de
+  Microsoft, lo que resuelve dependencias y habilita actualizaciones.
+- OpenCode usa npm cuando está disponible y comprueba sus rutas reales.
+- Renombrado completado de InicioRapido a QuickStart: registro por defecto
+  `/tmp/quickstart-*.log`, `.gitignore` y flag de tests
+  `QUICKSTART_NO_EJECUTAR`.
+- El modo simulación ya no descarga packs de iconos.
 
 ## [1.0.0] - 2026-10-13
 
