@@ -178,12 +178,21 @@ instalar_apt() {
     irun "sudo apt install -y ${paquetes}"
 }
 
+# Algunos snaps se publican con confinamiento clásico y no arrancan
+# sin esa bandera. Spotify es el caso típico.
+SNAPS_CLASSIC="spotify"
+
 instalar_snap() {
     local id="$1"
     local nombre="$(catalog_field "$id" 4)"
+    local bandera=""
+
+    if ui_contiene "$SNAPS_CLASSIC" "$nombre"; then
+        bandera="--classic"
+    fi
 
     asegurar_snapd
-    irun "sudo snap install ${nombre}"
+    irun "sudo snap install ${nombre} ${bandera}"
 }
 
 instalar_flatpak() {
@@ -298,14 +307,21 @@ instalar_custom() {
 
 # ---- Zen Browser --------------------------------------------
 custom_zen_instalada() {
-    [ -x "$HOME/.local/bin/zen-browser" ]
+    [ -x "$HOME/.local/opt/zen/squashfs-root/AppRun" ] ||
+        [ -x "$HOME/.local/opt/zen/zen.AppImage" ]
 }
 
 custom_zen() {
     local dir="$HOME/.local/opt/zen"
     local lanzador="$HOME/.local/bin/zen-browser"
     local escritorio="$HOME/.local/share/applications/zen-browser.desktop"
+    local icono="$HOME/.local/share/icons/hicolor/256x256/apps/zen-browser.png"
     local appimage
+
+    if [ "$HOST_ARCH" != "amd64" ]; then
+        ui_warning "Omitida en $HOST_ARCH: el AppImage de Zen solo existe para amd64."
+        return 2
+    fi
 
     mkdir -p "$HOME/.local/bin" "$HOME/.local/share/applications"
 
@@ -325,11 +341,27 @@ custom_zen() {
     rm -rf "$dir"
     mkdir -p "$dir"
     chmod +x "$appimage"
-    mv "$appimage" "$dir/zen.AppImage"
+
+    # Se extrae el AppImage en lugar de ejecutarlo: en Ubuntu 24.04+
+    # FUSE2 ya no viene de serie y el binario directo no arranca.
+    if ! "$appimage" --appimage-extract >/dev/null 2>&1; then
+        ui_error "No se pudo extraer el AppImage de Zen."
+        rm -rf "$dir"
+        return 1
+    fi
+
+    mv squashfs-root "$dir/squashfs-root"
+    rmdir "$(dirname "$appimage")" 2>/dev/null || true
+
+    # El icono va dentro del AppImage: se saca ahí para el lanzador.
+    if [ -e "$dir/squashfs-root/.DirIcon" ]; then
+        mkdir -p "$(dirname "$icono")"
+        cp "$dir/squashfs-root/.DirIcon" "$icono" 2>/dev/null || true
+    fi
 
     cat >"$lanzador" <<EOF
 #!/usr/bin/env bash
-exec "$dir/zen.AppImage" "\$@"
+exec "$dir/squashfs-root/AppRun" "\$@"
 EOF
     chmod +x "$lanzador"
 
@@ -338,7 +370,7 @@ EOF
 Name=Zen Browser
 Comment=Un navegador rápido y privado
 Exec=$lanzador %U
-Icon=$dir/zen.AppImage
+Icon=zen-browser
 Terminal=false
 Type=Application
 Categories=Network;WebBrowser;
@@ -563,14 +595,36 @@ custom_android-studio() {
     ui_detail "Ejecuta 'sdkmanager --licenses' para aceptar las licencias."
 }
 
+# ---- VS Code -----------------------------------------------
+# Se usa el repositorio oficial de Microsoft en lugar de un .deb
+# suelto: así se resuelven dependencias y llegan las actualizaciones.
+custom_vscode_instalada() {
+    command -v code >/dev/null 2>&1 || apt_ya_instalado code
+}
+
+custom_vscode() {
+    irun "sudo install -d -m 0755 /etc/apt/keyrings"
+    irun "curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null"
+    irun "printf 'deb [arch=${HOST_ARCH} signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main\n' | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null"
+    irun "sudo apt update -qq"
+    irun "sudo apt install -y code"
+}
+
 # ---- OpenCode ---------------------------------------------
 custom_opencode_instalada() {
-    command -v opencode >/dev/null 2>&1 || [ -x "$HOME/.opencode/bin/opencode" ]
+    command -v opencode >/dev/null 2>&1 ||
+        [ -x "$HOME/.local/bin/opencode" ] ||
+        [ -x "$HOME/.opencode/bin/opencode" ]
 }
 
 custom_opencode() {
-    irun "curl -fsSL https://opencode.ai/v2/install | bash"
-    agregar_al_perfil 'export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$PATH"'
+    if command -v npm >/dev/null 2>&1; then
+        # npm deja el binario ya en el PATH del usuario.
+        irun "npm install -g opencode-ai"
+    else
+        irun "curl -fsSL https://opencode.ai/v2/install | bash"
+        agregar_al_perfil 'export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$PATH"'
+    fi
 }
 
 # ---- Claude Code ------------------------------------------

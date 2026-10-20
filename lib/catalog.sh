@@ -53,7 +53,7 @@ rstats|Lenguajes y runtimes|apt|r-base r-cran-ggplot2|R + RStudio|Entorno de an�
 # ------------------------------------------------------------------
 # EDITORES E IDES
 # ------------------------------------------------------------------
-vscode|Editores e IDEs|deb|https://update.code.visualstudio.com/latest/linux-deb-x64/stable|Visual Studio Code|Editor de código de Microsoft|
+vscode|Editores e IDEs|custom|vscode|Visual Studio Code|Editor de código de Microsoft|
 vscodium|Editores e IDEs|deb|https://github.com/VSCodium/vscodium/releases/latest/download/VSCodium-linux-x64.deb|VS Codium|Clone de VS Code sin telemetría|
 zed|Editores e IDEs|deb|https://github.com/zed-industries/zed/releases/latest/download/Zed-linux-x86_64.deb|Zed|Editor rápido escrito en Rust|
 sublime|Editores e IDEs|deb|https://download.sublimetext.com/sublime_text_latest_amd64.deb|Sublime Text|Editor de textos rápido|
