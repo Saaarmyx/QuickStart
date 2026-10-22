@@ -1,19 +1,32 @@
-# Registros de instalación
+# QuickStart — .gitignore
+# Logs generados
+logs/
 *.log
-quickstart-*.log
+/tmp/quickstart-*.log
 
-# Temporales generados por el propio script
-/quick_start.deb
-*.AppImage
+# Paquetes descargados/instalados
+*.deb
+*.rpm
+*.apk
 
-# Copias de seguridad de editores
-*~
-*.swp
-*.swo
-.*.sw?
-*.bak
-*.orig
+# Config local (overrides)
+config/*.local.json
 
-# Sistema
+# OS
 .DS_Store
 Thumbs.db
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+.idea/
+
+# Temporales
+*.tmp
+*.swp
+*~
+
+# Backup de scripts
+*.bak
+*.orig

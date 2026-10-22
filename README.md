@@ -2,6 +2,13 @@
 
 > Instalador interactivo de aplicaciones para Ubuntu. Elige lo que quieres de un menú y déjalo instalado.
 
+[![Bash](https://img.shields.io/badge/Bash-5.0%2B-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04%20%7C%2026.04-E95420?logo=ubuntu&logoColor=white)](https://ubuntu.com)
+[![License](https://img.shields.io/badge/License-MIT-8B5CF6)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Activo-22C55E)]()
+
+---
+
 Un solo script, en español, que instala más de **110 aplicaciones** repartidas en **12 categorías**, con **10 perfiles listos** para los casos más habituales. No desinstala nada por sorpresa, detecta lo que ya tienes y deja un registro de todo lo que hizo.
 
 Nace de tres scripts que viene usando el autor para preparar máquinas nuevas: instalación limpia, driver Wi-Fi y utilidades. Aquí se fusionan en una sola herramienta con menú.
@@ -78,11 +85,11 @@ Ejecuta el script sin argumentos y entra al menú:
   11) Red y seguridad          (0)
   12) IA y asistentes          (0)
 
-  P)  Perfiles rápidos
-  C)  Catálogo completo
-  0)  Continuar con la instalación
+   P)  Perfiles rápidos
+   C)  Catálogo completo
+   0)  Continuar con la instalación
 
-  Seleccionadas                    6
+   Seleccionadas                    6
 ```
 
 Al entrar en una categoría marcas y desmarcas con los números:
