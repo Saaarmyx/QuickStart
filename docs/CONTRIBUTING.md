@@ -238,5 +238,5 @@ Incluye:
 
 ## Licencia
 
-Al contribuir aceptas que tu trabajo se publique bajo la licencia MIT del
-proyecto, la misma que cubre el resto del repositorio.
+Al contribuir aceptas que tu trabajo se publique bajo la Apache License 2.0
+del proyecto, la misma que cubre el resto del repositorio.

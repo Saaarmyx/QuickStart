@@ -1,140 +1,101 @@
-# Guía de Contribución — QuickStart
+# Contribuir a QuickStart
 
-> Instalador interactivo de +110 apps para Ubuntu (bash puro).  
-> La guía completa y detallada está en **[docs/CONTRIBUTING.md](./docs/CONTRIBUTING.md)**.
+Gracias por querer mejorar QuickStart. Es un proyecto personal, pero está pensado para que añadir una aplicación sea sencillo y para que cualquier persona pueda revisar lo que el script va a ejecutar.
 
----
+## Antes de empezar
 
-## 🚀 Resumen Rápido
+Si tu cambio es grande (un motor de instalación nuevo, una reestructuración de `lib/` o un modo de desinstalación distinto), abre primero un issue. Para añadir una app al catálogo o corregir una entrada, puedes enviar el Pull Request directamente.
 
-### Flujo Básico
+## Flujo de trabajo
 
-```bash
-# 1. Fork + Clona tu fork
-git clone https://github.com/TU-USUARIO/Saaarmyx.git
-cd Saaarmyx/QuickStart
+1. Haz un fork del repositorio.
+2. Crea una rama desde `main`:
 
-# 2. Rama desde main
-git checkout main
-git pull upstream main
-git checkout -b feature/mi-mejora   # fix/, docs/, refactor/, style/, build/, ci/, test/
+   ```bash
+   git checkout -b feat/nueva-app
+   ```
 
-# 3. Cambios + Commits Conventional Commits
-git add lib/catalog.sh lib/installers.sh
-git commit -m "feat(catalog): añade Bun y Deno al catálogo"
+   Usa prefijos `feat/`, `fix/` o `docs/` y nombres en kebab-case.
 
-# 4. Push + PR
-git push origin feature/mi-mejora
-# Abre PR hacia Saaarmyx/Saaarmyx:main (carpeta QuickStart/)
-```
+3. Haz commits atómicos con [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/):
 
-### Convención de Ramas y Commits
+   ```text
+   feat(catalogo): añade Zed al catálogo de editores
+   fix(installers): corrige la ruta de OpenCode en npm
+   docs(readme): documenta el perfil de datos
+   ```
 
-| Prefijo Rama | Tipo Commit | Uso |
-|--------------|-------------|-----|
-| `feature/` | `feat` | Nueva app, perfil, categoría, opción CLI |
-| `fix/` | `fix` | Corrección bug (detección, instalación, menú) |
-| `refactor/` | `refactor` | Reorganización sin cambio comportamiento |
-| `docs/` | `docs` | README, CHANGELOG, docs/CONTRIBUTING.md |
-| `style/` | `style` | Formato (shellcheck), sin lógica |
-| `build/` | `build` | Scripts de build, CI, packaging |
-| `ci/` | `ci` | GitHub Actions, automatización |
-| `test/` | `test` | Tests (validar_catalogo.sh, probar_menu.sh) |
+4. Abre un Pull Request contra `main` y describe qué probaste.
 
-**Ámbitos QuickStart**: `catalog`, `installers`, `ui`, `checks`, `wifi`, `themes`, `removers`, `profiles`.
+## Entorno de desarrollo
 
-### Checks Obligatorios Antes de PR
+Solo necesitas Ubuntu 24.04/26.04, `bash` y `sudo` para probar la instalación. Para el desarrollo no hace falta compilar nada.
 
 ```bash
-# 1. Validador de catálogo (debe salir con código 0)
+git clone https://github.com/Saaarmyx/QuickStart.git
+cd QuickStart
+chmod +x quick_start.sh
+
+# Ver el catálogo y los perfiles
+./quick_start.sh --listar
+./quick_start.sh --listar-perfiles
+
+# Simular una instalación
+./quick_start.sh --perfil backend --simular
+
+# Validar el catálogo y la lógica de menús
 ./tests/validar_catalogo.sh
-
-# 2. Sintaxis bash
-bash -n quick_start.sh lib/*.sh tests/*.sh
-
-# 3. Shellcheck (si lo tienes instalado)
-shellcheck quick_start.sh lib/*.sh tests/*.sh
-
-# 4. Simula tu cambio
-./quick_start.sh --instalar TU_ID --simular
+./tests/probar_menu.sh
 ```
 
-### Checklist PR
+Comprobaciones de sintaxis y análisis estático:
 
-- [ ] `main` actualizado y rebaseado
-- [ ] Commits atómicos + Conventional Commits (español, imperativo, minúsculas)
-- [ ] Checks arriba pasan
-- [ ] `CHANGELOG.md` actualizado (sección "No publicado")
-- [ ] `docs/CONTRIBUTING.md` actualizado si cambias formato de catálogo/perfiles
-- [ ] PR explica **qué, por qué, cómo probaste** (incluye salida de simulación)
-
----
-
-## 📋 Formato de Catálogo (Resumen)
-
-Una línea en `lib/catalog.sh` bloque `CATALOG_RAW`:
-
-```
-id|categoría|tipo|argumento|nombre|descripción|comprobación
-```
-
-| Campo | Reglas |
-|-------|--------|
-| `id` | Minúsculas, números, guiones; empieza por letra/número; corto y predecible |
-| `categoría` | Coincide exactamente con existente o crea grupo nuevo |
-| `tipo` | `apt`, `snap`, `flatpak`, `deb`, `ppa`, `custom` |
-| `argumento` | Paquetes (espacio), snap name, flatpak id, URL .deb, nombre handler custom |
-| `nombre` | Lo que ve el usuario en menú |
-| `descripción` | Una línea, para qué sirve |
-| `comprobación` | Opcional: `apt:pkg1,pkg2`, `snap:nombre`, `flatpak:id`, `bin:cmd1,cmd2`, `path:/ruta` |
-
-**Ejemplo**:
-```
-neovim|Editores e IDEs|custom|neovim|Neovim|Editor modal moderno|
-```
-
-Si `tipo=custom`, añade **dos** funciones en `lib/installers.sh`:
 ```bash
-custom_neovim_instalada() { command -v nvim >/dev/null 2>&1; }
-custom_neovim() { irun "curl -fL ... | tar -xz ..."; }
+bash -n quick_start.sh
+bash -n lib/*.sh
+bash -n tests/*.sh
+shellcheck quick_start.sh lib/*.sh tests/*.sh
 ```
 
----
+`shellcheck` es opcional, pero si lo tienes instalado, pásalo antes de enviar el PR.
 
-## 🎨 Estándares Bash (QuickStart)
+## Estándares de código
 
-| Regla | Detalle |
-|-------|---------|
-| Shebang | `#!/usr/bin/env bash` |
-| Modo estricto | `set -uo pipefail` (**sin** `set -e`) |
-| Indentación | 4 espacios, **sin tabs** |
-| Comillas | Siempre en expansiones: `"$var"`, `"${arr[@]}"` |
-| Variables | `local` en funciones; `readonly` para constantes |
-| Ejecución | Usa `irun` (wrapper que respeta `--simular`) |
-| Mensajes | Funciones `ui_*` (nunca `echo` suelto) |
-| Comentarios | En español, explican **por qué**, no **qué** |
-| Validación | `bash -n` + `shellcheck` antes de commit |
+- **Bash:** 4 espacios, `snake_case` para funciones y variables, mensajes en español.
+- **Catálogo:** una línea por app en `lib/catalog.sh`, con el formato documentado en `docs/CONTRIBUTING.md`.
+- **Instaladores:** los pasos propios van en `lib/installers.sh` como `custom_<app>` y su comprobación como `custom_<app>_instalada`.
+- **Desinstaladores:** si la app necesita limpieza propia, añade `custom_<app>_desinstalar` en `lib/removers.sh`.
+- **Formato:** respeta `.editorconfig` (UTF-8, LF, 4 espacios).
+- **Tests:** `tests/validar_catalogo.sh` debe pasar siempre. Si tocas menús, ejecuta también `tests/probar_menu.sh`.
 
----
+## Checklist del Pull Request
 
-## 🐛 Reportar Issues
+- [ ] El cambio está explicado y tiene un caso de uso claro.
+- [ ] `./tests/validar_catalogo.sh` pasa.
+- [ ] `./tests/probar_menu.sh` pasa si toqué menús.
+- [ ] `bash -n quick_start.sh` y `bash -n lib/*.sh` pasan.
+- [ ] `shellcheck` no reporta errores nuevos (si está instalado).
+- [ ] Probé el flujo con `--simular` en Ubuntu 24.04 o 26.04.
+- [ ] Actualicé `README.md` y `CHANGELOG.md` si cambia el comportamiento visible.
+- [ ] No incluí credenciales, rutas personales ni logs.
+- [ ] El commit sigue Conventional Commits.
 
-Incluye:
-- Ubuntu version (`lsb_release -ds`)
-- Arquitectura (`dpkg --print-architecture`)
-- Comando ejecutado
-- Salida de `./quick_start.sh --instalar TU_ID --simular`
-- Fragmento relevante del log (`/tmp/quickstart-*.log`)
+## Proceso de revisión
 
----
+Reviso los PR cuando puedo, sin plazos fijos. Los cambios que tocan instaladores o `sudo` pueden tardar más porque necesito probarlos en una máquina virtual. Te responderé en el propio PR con dudas o cambios solicitados.
 
-## 📜 Licencia de Contribuciones
+## Acuerdo de contribución
 
-Al enviar PR, aceptas que tu código se licencie bajo **MIT** (misma licencia del proyecto). Ver [LICENSE](./LICENSE).
+No hay CLA. Al enviar una contribución aceptas que se incorpore al proyecto bajo **Apache License 2.0** (`Apache-2.0`), la misma licencia del repositorio.
 
----
+## Código de conducta
 
-## 🤔 Dudas
+- Respeta a las demás personas, aunque no compartas su criterio.
+- Crítica el código, no a quien lo escribió.
+- No publiques datos personales, credenciales ni información de terceros.
+- No propongas instalar software desde fuentes no oficiales.
+- Si detectas un problema de seguridad, repórtalo en privado antes de hacerlo público.
 
-- GitHub Discussions / Issues.
-- Discord `saaarmyx` o @saaarmyx en GitHub.
+## Licencia
+
+Las contribuciones quedan bajo **Apache License 2.0** (`Apache-2.0`). Consulta [LICENSE](LICENSE) y [NOTICE](NOTICE).

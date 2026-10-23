@@ -10,7 +10,7 @@
 #    ./quick_start.sh --instalar node,rust,python
 #    ./quick_start.sh --ayuda
 #
-#  Licencia: MIT. Ver LICENSE.
+#  Licencia: Apache License 2.0. Ver LICENSE y NOTICE.
 # ============================================================
 
 set -uo pipefail
