@@ -2,7 +2,7 @@
 
 > Todos los cambios notables de este proyecto se documentarán en este archivo.
 
-## QuickStart 0.3
+## QuickStart 0.2
 
 ### 2026-11-14
 
@@ -13,13 +13,6 @@
 
 - Mejorado
   - Se actualizaron los enlaces de la tabla de contenidos para incluir las nuevas secciones.
-
-## QuickStart 0.2
-
-### 2026-11-14
-
-- Agregado
-  - Se añadió documentación con README, CHANGELOG, LICENSE y NOTICE.
 
 ## QuickStart 0.1
 
