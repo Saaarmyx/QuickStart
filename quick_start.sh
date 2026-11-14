@@ -15,7 +15,7 @@
 
 set -uo pipefail
 
-VERSION="1.0.0"
+QS_VERSION="1.0.0"
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 LIB_DIR="$SCRIPT_DIR/lib"
@@ -55,7 +55,7 @@ DESINSTALADOS_FALLIDOS=()
 
 mostrar_ayuda() {
     cat <<EOF
-QuickStart $VERSION · instalador de aplicaciones para Ubuntu
+QuickStart $QS_VERSION · instalador de aplicaciones para Ubuntu
 
 USO
   ./quick_start.sh [opciones]
@@ -97,7 +97,7 @@ listar_catalogo() {
     local categoria_actual=""
     local id nombre tipo descripcion
 
-    ui_banner "Catálogo de aplicaciones" "$VERSION"
+    ui_banner "Catálogo de aplicaciones" "$QS_VERSION"
 
     while IFS='|' read -r id _categoria tipo _arg nombre descripcion _check; do
         [ -n "$id" ] || continue
@@ -120,7 +120,7 @@ listar_catalogo() {
 listar_perfiles() {
     local nombre descripcion apps
 
-    ui_banner "Perfiles disponibles" "$VERSION"
+    ui_banner "Perfiles disponibles" "$QS_VERSION"
 
     while IFS='|' read -r nombre descripcion apps; do
         [ -n "$nombre" ] || continue
@@ -234,7 +234,7 @@ menu_categoria() {
     while true; do
         clear 2>/dev/null || true
 
-        ui_banner "$categoria" "$VERSION"
+        ui_banner "$categoria" "$QS_VERSION"
 
         ui_info "$total aplicaciones en esta categoría."
         ui_detail "Introduce números para marcar o desmarcar."
@@ -327,7 +327,7 @@ menu_desinstalar() {
     while true; do
         clear 2>/dev/null || true
 
-        ui_banner "Desinstalar aplicaciones" "$VERSION"
+        ui_banner "Desinstalar aplicaciones" "$QS_VERSION"
 
         ui_info "Aplicaciones del catálogo instaladas: $total"
         ui_detail "Introduce números para seleccionar. Comandos: v (volver)"
@@ -434,7 +434,7 @@ menu_principal() {
     while true; do
         clear 2>/dev/null || true
 
-        ui_banner "QuickStart · instalador de aplicaciones" "$VERSION"
+        ui_banner "QuickStart · instalador de aplicaciones" "$QS_VERSION"
         ui_detail "Sistema: ${UBUNTU_PRETTY_NAME:-desconocido} · $HOST_ARCH"
         echo
 
@@ -443,19 +443,20 @@ menu_principal() {
             local marca
             marca="$(contar_en_categoria "$categoria")"
 
-            printf '  %2d) %-26s %b\n' \
+            printf '  %2d) %-28s %b\n' \
                 "$((i + 1))" "$categoria" \
                 "${GREEN}($marca)${NC}"
         done
 
         echo
+        echo -e "  ${CYAN}────────────────────────────────────────${NC}"
         echo -e "  ${BOLD}P)  Perfiles rápidos${NC}"
         echo -e "  ${BOLD}T)  Personalización: tema e iconos${NC}"
         echo -e "  ${BOLD}D)  Desinstalar aplicaciones${NC}"
         echo -e "  ${BOLD}C)  Catálogo completo${NC}"
         echo -e "  ${BOLD}0)  Continuar con la instalación${NC}"
         echo
-        ui_table "Seleccionadas" "$(total_seleccion)"
+        printf '  %-34s %b\n' "Seleccionadas" "${GREEN}$(total_seleccion)${NC}"
 
         if ! read -rp "  ${BOLD}Opción:${NC} " entrada; then
             entrada="0"
@@ -505,7 +506,7 @@ menu_perfiles() {
     while true; do
         clear 2>/dev/null || true
 
-        ui_banner "Perfiles rápidos" "$VERSION"
+        ui_banner "Perfiles rápidos" "$QS_VERSION"
         ui_detail "Cada perfil es un atajo a un grupo de apps."
         ui_detail "Se acumulan con lo que ya tengas seleccionado."
         echo
@@ -937,7 +938,7 @@ principal() {
         return 0
     fi
 
-    ui_banner "QuickStart" "$VERSION"
+    ui_banner "QuickStart" "$QS_VERSION"
 
     ui_step "Comprobaciones del sistema"
 

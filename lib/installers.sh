@@ -48,9 +48,6 @@ agregar_al_perfil() {
 # Rutas de instalación que usan varios manejadores.
 ruta_nvm="$HOME/.nvm"
 ruta_cargo="$HOME/.cargo"
-ruta_bun="$HOME/.bun"
-ruta_deno="$HOME/.deno"
-ruta_dotnet="$HOME/.dotnet"
 ruta_go="/usr/local/go"
 
 NVM_VERSION="v0.40.3"
@@ -479,49 +476,6 @@ custom_go() {
     agregar_al_perfil 'export PATH="$PATH:/usr/local/go/bin"'
 
     ui_success "Go $version instalado."
-}
-
-# ---- uv ----------------------------------------------------
-custom_uv_instalada() {
-    command -v uv >/dev/null 2>&1 || [ -x "$HOME/.local/bin/uv" ]
-}
-
-custom_uv() {
-    irun "curl -LsSf https://astral.sh/uv/install.sh | sh"
-    agregar_al_perfil 'export PATH="$HOME/.local/bin:$PATH"'
-}
-
-# ---- Bun ---------------------------------------------------
-custom_bun_instalada() {
-    [ -x "$ruta_bun/bin/bun" ] || command -v bun >/dev/null 2>&1
-}
-
-custom_bun() {
-    irun "curl -fsSL https://bun.sh/install | bash"
-    agregar_al_perfil 'export BUN_INSTALL="$HOME/.bun"'
-    agregar_al_perfil 'export PATH="$BUN_INSTALL/bin:$PATH"'
-}
-
-# ---- Deno --------------------------------------------------
-custom_deno_instalada() {
-    [ -x "$ruta_deno/bin/deno" ] || command -v deno >/dev/null 2>&1
-}
-
-custom_deno() {
-    irun "curl -fsSL https://deno.land/install.sh | sh"
-    agregar_al_perfil 'export DENO_INSTALL="$HOME/.deno"'
-    agregar_al_perfil 'export PATH="$DENO_INSTALL/bin:$PATH"'
-}
-
-# ---- .NET SDK ---------------------------------------------
-custom_dotnet_instalada() {
-    command -v dotnet >/dev/null 2>&1 || [ -x "$ruta_dotnet/dotnet" ]
-}
-
-custom_dotnet() {
-    irun "curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel LTS"
-    agregar_al_perfil 'export DOTNET_ROOT="$HOME/.dotnet"'
-    agregar_al_perfil 'export PATH="$DOTNET_ROOT:$DOTNET_ROOT/tools:$PATH"'
 }
 
 # ---- GitHub CLI -------------------------------------------

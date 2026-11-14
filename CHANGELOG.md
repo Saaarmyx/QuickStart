@@ -2,6 +2,21 @@
 
 > Todos los cambios notables de este proyecto se documentarán en este archivo.
 
+## QuickStart 0.4
+
+### 2026-11-14
+
+- Corregido
+  - Banner mostraba la versión de Ubuntu en lugar de la versión de QuickStart al cargar `/etc/os-release`, que sobrescribía la variable `VERSION`. Se renombró a `QS_VERSION`.
+
+- Mejorado
+  - Menú principal con separador visual entre categorías y opciones especiales, alineación de nombres a 28 caracteres y contador de seleccionadas en verde.
+
+- Cambiado
+  - Sección "Lenguajes y runtimes" reducida de 15 a 6 lenguajes (Python, Node.js, Rust, Java, PHP, Go) con detección automática de instalación previa mediante `bin:`.
+  - Perfiles `frontend`, `data` y `mobile` actualizados para quitar referencias a lenguajes eliminados (bun, uv, jupyter, rstats).
+  - Eliminados los manejadores custom de uv, bun, deno y .NET SDK de `lib/installers.sh`.
+
 ## QuickStart 0.3
 
 ### 2026-11-14

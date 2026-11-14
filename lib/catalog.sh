@@ -34,21 +34,12 @@ brave|Navegadores|custom|brave|Brave Browser|Navegador con bloqueador de anuncio
 # ------------------------------------------------------------------
 # LENGUAJES Y RUNTIMES
 # ------------------------------------------------------------------
-python|Lenguajes y runtimes|apt|python3 python3-pip python3-venv python3-dev python-is-python3|Python 3|Intérprete, pip y entornos virtuales|
-pyenv|Lenguajes y runtimes|apt|pyenv|Pyenv|Gestor de versiones de Python|
-uv|Lenguajes y runtimes|custom|uv|uv|Gestor de paquetes y proyectos Python written in Rust, muy rápido|
-jupyter|Lenguajes y runtimes|apt|jupyter-notebook|Jupyter Notebook|Entorno de trabajo para notebooks Python|
-node|Lenguajes y runtimes|custom|nvm|Node.js + NVM|Node.js con gestor de versiones (LTS por defecto)|
-bun|Lenguajes y runtimes|custom|bun|Bun|Runtime JavaScript alternative con instalador propio|
-deno|Lenguajes y runtimes|custom|deno|Deno|Runtime seguro para TypeScript y JavaScript|
-rust|Lenguajes y runtimes|custom|rust|Rust + Cargo|Instalado mediante rustup, gestor oficial|
-go|Lenguajes y runtimes|custom|go|Go|Lenguaje de Google, instalado desde el tarball oficial|
-java|Lenguajes y runtimes|apt|default-jdk|OpenJDK|Java Development Kit|
-php|Lenguajes y runtimes|apt|php-cli composer|PHP + Composer|Intérprete PHP y gestor de dependencias|
-ruby|Lenguajes y runtimes|apt|ruby-full|Ruby|Intérprete completo de Ruby|
-dotnet|Lenguajes y runtimes|custom|dotnet|.NET SDK|Runtime de Microsoft|
-elixir|Lenguajes y runtimes|apt|elixir|Elixir + Erlang|Lenguaje funcional sobre BEAM|
-rstats|Lenguajes y runtimes|apt|r-base r-cran-ggplot2|R + RStudio|Entorno de análisis estadístico|
+python|Lenguajes y runtimes|apt|python3 python3-pip python3-venv python3-dev python-is-python3|Python 3|Intérprete, pip y entornos virtuales|bin:python3
+node|Lenguajes y runtimes|custom|nvm|Node.js + NVM|Node.js con gestor de versiones (LTS por defecto)|bin:node
+rust|Lenguajes y runtimes|custom|rust|Rust + Cargo|Instalado mediante rustup, gestor oficial|bin:rustc
+java|Lenguajes y runtimes|apt|default-jdk|OpenJDK|Java Development Kit|bin:java
+php|Lenguajes y runtimes|apt|php-cli composer|PHP + Composer|Intérprete PHP y gestor de dependencias|bin:php
+go|Lenguajes y runtimes|custom|go|Go|Lenguaje de Google, instalado desde el tarball oficial|bin:go
 
 # ------------------------------------------------------------------
 # EDITORES E IDES
@@ -194,11 +185,11 @@ CATALOG_EOF
 
 PROFILES_RAW=$(cat <<'PROFILES_EOF'
 minimal|Lo esencial del día a día|git btop fastfetch ripgrep jq-yq
-frontend|Desarrollo web frontend|git node bun python vscode vscodium zen postman insomnia yt-dlp btop jq-yq
+frontend|Desarrollo web frontend|git node python vscode vscodium zen postman insomnia yt-dlp btop jq-yq
 backend|Desarrollo backend|git node python docker postgres-client mysql-client redis-tools vscode postman lazygit btop
-data|Ciencia de datos|git python uv jupyter rstats postgres-client dbeaver vscode btop
+data|Ciencia de datos|git python postgres-client dbeaver vscode btop
 devops|Infraestructura y DevOps|git docker podman kubectl helm minikube ansible terraform github-cli lazygit btop ripgrep
-mobile|Desarrollo móvil|git node python jupyter android-studio vscode insomnia btop
+mobile|Desarrollo móvil|git node python android-studio vscode insomnia btop
 multimedia|Creación audiovisual|ffmpeg vlc celluloid audacity obs-studio kdenlive handbrake inkscape gimp krita yt-dlp
 gamedev|Ejecución de juegos|steam lutris heroic artcraft gamescope protonup-qt mangohud mangohud-ui btop
 social|Social y comunicación|discord telegram signal slack element whatsapp spotify bitwarden
