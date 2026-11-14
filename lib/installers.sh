@@ -323,6 +323,12 @@ custom_zen() {
         return 2
     fi
 
+    # FUSE2 es obligatorio para extraer el AppImage en Ubuntu 24.04+
+    if ! dpkg-query -W -f='${Status}' fuse2 2>/dev/null | grep -q "install ok installed"; then
+        ui_detail "Instalando fuse2 (necesario para AppImage)..."
+        irun "sudo apt install -y fuse2"
+    fi
+
     mkdir -p "$HOME/.local/bin" "$HOME/.local/share/applications"
 
     if [ "${DRY_RUN:-0}" = "1" ]; then
@@ -691,6 +697,29 @@ custom_wireshark() {
         ui_warning "Tu usuario se añadió al grupo wireshark."
         ui_detail "Cierra la sesión y vuelve a entrar para capturar sin sudo."
     fi
+}
+
+# ---- Git credentials helper --------------------------------
+custom_git_credentials_instalada() {
+    local config
+    config="$(git config --global credential.helper 2>/dev/null)"
+    [ -n "$config" ]
+}
+
+custom_git_credentials() {
+    # Libsecret es la forma recomendada en Ubuntu para persistir credenciales.
+    # Si no está disponible, se usa el caché en memoria (15 minutos).
+    if command -v libsecret-1-0 >/dev/null 2>&1 || dpkg-query -W -f='${Status}' libsecret-1-0 2>/dev/null | grep -q "install ok installed"; then
+        ui_detail "Usando libsecret para persistir credenciales de Git."
+        irun "git config --global credential.helper store"
+    else
+        ui_detail "Instalando libsecret para credenciales de Git..."
+        irun "sudo apt install -y libsecret-1-0"
+        irun "git config --global credential.helper store"
+    fi
+
+    ui_success "Credenciales de Git se guardarán de forma persistente."
+    ui_detail "La próxima vez que hagas git push/pull, se guardarán tus credenciales."
 }
 
 # ------------------------------------------------------------

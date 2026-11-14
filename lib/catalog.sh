@@ -67,6 +67,7 @@ emacs|Editores e IDEs|apt|emacs|Emacs|Editor clásico ampliable|
 # CONTENEDORES Y DEVOPS
 # ------------------------------------------------------------------
 git|Contenedores y DevOps|apt|git|Git|Sistema de control de versiones|
+git_credentials|Contenedores y DevOps|custom|git_credentials|Git credentials helper|Persistencia de credenciales de Git en caché|
 docker|Contenedores y DevOps|custom|docker|Docker Engine + Compose|Motor de contenedores con plugin compose|
 podman|Contenedores y DevOps|apt|podman|Podman|Contenedores sin demonio y sin root|
 kubectl|Contenedores y DevOps|snap|kubectl|Kubectl|Cliente de Kubernetes|
@@ -92,7 +93,7 @@ sqlite|Bases de datos|apt|sqlite3|SQLite|Motor de base de datos ligero|
 # ------------------------------------------------------------------
 # SOCIAL Y COMUNICACIÓN
 # ------------------------------------------------------------------
-discord|Social y comunicación|deb|https://discord.com/api/download?platform=linux&format=deb|Discord|Voice, chat y comunidad|
+discord|Social y comunicación|snap|discord|Discord|Voice, chat y comunidad|
 telegram|Social y comunicación|snap|telegram-desktop|Telegram Desktop|Mensajería rápida y cifrada|
 signal|Social y comunicación|flatpak|org.signal.Signal|Signal|Mensajería privada de código abierto|
 slack|Social y comunicación|flatpak|com.slack.Slack|Slack|Mensajería para equipos|
@@ -142,6 +143,7 @@ gamescope|Gaming|apt|gamescope|Gamescope|Compositor para jugar en modo consola|
 protonup-qt|Gaming|apt|protonup-qt|ProtonUp-Qt|Gestor de versiones de Proton|
 mangohud|Gaming|apt|mangohud|MangoHud|Sensor de FPS y overlay en los juegos|
 mangohud-ui|Gaming|apt|mangohud-ui|Control de MangoHud|Interfaz gráfica para configurar el overlay|
+artcraft|Gaming|deb|https://github.com/storytold/craft-launcher/releases/latest/download/artcraft-launcher--linux-x86_64.deb|Artcraft Launcher|Launcher de código abierto para apps de Craft (Minecraft y forks)|
 
 # ------------------------------------------------------------------
 # TERMINAL Y UTILIDADES
@@ -198,7 +200,7 @@ data|Ciencia de datos|git python uv jupyter rstats postgres-client dbeaver vscod
 devops|Infraestructura y DevOps|git docker podman kubectl helm minikube ansible terraform github-cli lazygit btop ripgrep
 mobile|Desarrollo móvil|git node python jupyter android-studio vscode insomnia btop
 multimedia|Creación audiovisual|ffmpeg vlc celluloid audacity obs-studio kdenlive handbrake inkscape gimp krita yt-dlp
-gamedev|Ejecución de juegos|steam lutris heroic gamescope protonup-qt mangohud mangohud-ui btop
+gamedev|Ejecución de juegos|steam lutris heroic artcraft gamescope protonup-qt mangohud mangohud-ui btop
 social|Social y comunicación|discord telegram signal slack element whatsapp spotify bitwarden
 privacidad|Entorno privado y ligero|zen signal bitwarden keepassxc ufw-firewall btop fastfetch
 PROFILES_EOF
