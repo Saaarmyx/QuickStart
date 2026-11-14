@@ -1,30 +1,24 @@
 # Historial de cambios
 
-Todas las cambios notables de este proyecto se documentarán en este archivo.
+Todas los cambios notables de este proyecto se documentarán en este archivo.
 
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/),
 y este proyecto sigue [Versionamiento Semántico](https://semver.org/lang/es/).
 
-## [Sin publicar]
+## [1.0.0] - 2026-11-14
 
 ### Agregado
 
-- Base del sistema con detección de driver Wi-Fi MT7902.
-- Desinstalación con protección de paquetes base.
-- Tema MacTahoe-Dark e iconos WhiteSur opcionales.
+- Banner con imagen `Saaarmyx-Github.svg` y enlace a la página principal.
+- Sección "Descripción" con descripción detallada del instalador interactivo.
+- Sección "Características principales" con lista de funcionalidades: menú interactivo, perfiles rápidos, motores de instalación y CLI.
+- Enlaces de tabla de contenidos para las nuevas secciones.
 
-### Corregido
+## [0.1.0] - 2026-10-13
 
-- Zen Browser arranca en Ubuntu 24.04+ con AppImage.
-- El modo simulación ya no descarga packs de iconos.
+### Agregado
 
-### Mejorado
-
-- La licencia del proyecto pasa a Apache License 2.0.
-
-## [1.0.0] - 2026-10-13
-
-Primera versión pública con menú interactivo, 12 categorías, 10 perfiles y más de 110 aplicaciones.
+- Primer commit con la estructura base del proyecto: script principal `quick_start.sh` con menú interactivo y CLI, scripts de soporte en `lib/`, tema GTK MacTahoe-Dark en `themes/`, validador y pruebas en `tests/`, catálogo de más de 110 aplicaciones en 12 categorías, 10 perfiles rápidos y seis motores de instalación, `README.md`, `CHANGELOG.md`, `LICENSE` y `NOTICE`.
 
 ---
 
